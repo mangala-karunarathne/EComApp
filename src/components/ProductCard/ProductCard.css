@@ -1,0 +1,32 @@
+
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px;
+    transition: transform 0.3s;
+    width: 18rem;
+  }
+  
+  .product-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .product-card img {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .product-card .card-body {
+    padding: 10px;
+  }
+  
+  .product-card .card-text {
+    margin-bottom: 0.5rem;
+  }
+  
+  .product-card button {
+    width: 100%;
+  }
+  
