@@ -5,17 +5,18 @@ import "react-toastify/dist/ReactToastify.css";
 
 import Login from "./pages/Login";
 import Header from "./components/Header";
+import Home from "./pages/Home";
 
 function App() {
   return (
     <BrowserRouter>
-      <ToastContainer />
       <Header />
       <Routes>
-        <Route>
-          <Route path="/" element={<Login />} />
-        </Route>
+        <Route path="/" element={<Login />} />
+        <Route path="/home" element={<Home />} />
+        {/* Define more routes here */}
       </Routes>
+      <ToastContainer />
     </BrowserRouter>
   );
 }

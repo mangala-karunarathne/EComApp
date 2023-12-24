@@ -1,18 +1,24 @@
-import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify";
-import { GoogleOutlined, MailOutlined } from "@ant-design/icons";
-import { Button } from "antd";
+import React, { useState, useEffect} from 'react';
+import { toast } from 'react-toastify';
+import { Button, Card } from 'antd';
+import { Link} from 'react-router-dom';
 import { isNotEmpty } from "../validation/Validation";
 import axios from "axios";
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  const [email, setEmail] = useState("john@mail.com");
-  const [password, setPassword] = useState("changeme");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -28,7 +34,7 @@ const Login = () => {
       return true;
     }
     return false;
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,8 +56,19 @@ const Login = () => {
         if (res.status === 201) {
           toast.success("Login Successfuly!!!");
           setLoading(false);
+          dispatch({
+            type: "LOGGED_IN_USER",
+            payload: {
+              //email: res.data.email,
+              token: res.data.access_token,
+              _id: res.data._id,
+            },
+          });
+          setIsLoggedIn(true);
         }
         console.log("res", res);
+        //history.push("/home");
+        navigate("/home");
       })
       .catch((error) => {
         console.log(error);
@@ -61,77 +78,77 @@ const Login = () => {
   };
 
   const loginForm = () => {
-    return (
+    return(
       <form>
-        <div id="email" className="form-group">
-          <input
-            type="email"
-            className="form-control"
-            // value={email}
+        <div id="email" className='form-group'>
+          <label>Email</label>
+          <input 
+            type='email' 
             name="email"
+            className='form-control'
             value={formData.email}
-            // onChange={(e) => setEmail(e.target.value)}
+            //onChange={(e) => setEmail(e.target.value)}
             onChange={handleInputChange}
-            placeholder="Your email"
-            autoFocus
+            placeholder='Your email'
+            autoFocus 
           />
         </div>
-
-        <div id="password" className="form-group">
-          <input
-            type="password"
-            className="form-control mt-3"
-            // value={password}
-            // onChange={(e) => setPassword(e.target.value)}
+      
+        <div id="password" className='form-group mt-3'>
+          <label>Password</label>
+          <input 
+            type='password' 
             name="password"
+            className='form-control'
             value={formData.password}
+            //onChange={(e) => setPassword(e.target.value)}
             onChange={handleInputChange}
-            placeholder="Your password"
-            autoFocus
+            placeholder='Your password'
+            autoFocus 
           />
         </div>
 
         <Button
           onClick={handleSubmit}
-          type="primary"
-          className="mb-3"
+          className='mb-3 mt-3'
           block
-          shape="round"
-          icon={<MailOutlined />}
-          size="large"
-          disabled={!email || password.length < 6}
+          size='large'
+          style={{ backgroundColor: 'red', borderColor: 'red', color: 'white' }}
         >
-          Login with Email/Password
+          Log in
         </Button>
       </form>
-    );
-  };
+    )
+    
+  }
   return (
-    <div className="container p-5">
-      <div className="row">
-        <div className="col-md-6 offset-md-">
-          {loading ? (
-            <h4 className="text-danger">Loading...</h4>
-          ) : (
-            <h4>Login</h4>
-          )}
-          {loginForm()}
-
-          <Button
-            //onClick={googleLogin}
-            type="secondary"
-            className="mb-3"
-            block
-            shape="round"
-            icon={<GoogleOutlined />}
-            size="large"
-          >
-            Login with Google
-          </Button>
-        </div>
+    <Card className="col-md-4 offset-md-3 mx-auto p-5">
+      {loading ? (
+        <h4 className='text-danger text-center'>Loading...</h4>
+        ) : (
+          <>
+            <h4 className='text-bold text-center'>OrelBuy</h4>
+            <p className='text-bold text-center'>Hello, Welcome to OrelBuy</p>
+          </>
+        )}
+      {loginForm()}
+      <div className='text-center mb-3'>
+        <p>
+          Don't have and account?{' '}
+          <span>
+            <Link>Sign up</Link>
+          </span>
+        </p>
+        <p>
+          Forgot your password?{' '}
+          <span>
+            <Link>Reset it</Link>
+          </span>
+        </p>
       </div>
-    </div>
+    </Card>
   );
-};
+}
 
-export default Login;
+export default Login
+
