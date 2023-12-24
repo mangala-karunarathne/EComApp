@@ -5,7 +5,8 @@ import './ProductCard.css';
 
 const ProductCard = ({ product }) => {
   const { price, discount, discount_price, images } = product;
-  const imageUrl = images.length > 0 ? images[0].url : ''; // Take the first image URL
+  // const imageUrl = images.length > 0 ? images[0].url : ''; 
+  const imageUrl = "https://shorturl.at/rCHI4"; 
 
   return (
     <Card className="product-card" style={{ width: '18rem' }}>
