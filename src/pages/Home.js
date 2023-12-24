@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { getAllProducts } from '../functions/products';
 import ProductCard from '../components/ProductCard/ProductCard';
 import ProductList from '../components/ProductList/ProductList';
+import Sidebar from '../components/Navbar/Navbar';
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -33,11 +34,11 @@ const Home = () => {
     <div className='container-fluid'>
         <div className='row'>
           <div className='col-md-2'>
-            <Sidenav />
+            <Sidebar />
           </div>
           
           <div className='col-md-10'>
-            <h4>Home Page</h4>
+            {/* <h4>Home Page</h4> */}
             {/* {JSON.stringify(products)} */}
             <ProductList products={products} />
           </div>
